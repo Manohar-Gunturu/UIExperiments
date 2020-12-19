@@ -11,7 +11,8 @@
         
         var spaceCircles = [];
 
-        const SCREEN_SIZE = window.screen.width;
+        const SCREEN_WIDTH = window.screen.width;
+        const SCREEN_HEIGHT = window.screen.height;
         const colors = ["green", "purple", "orange"];
 
         const isPrime = num => {
@@ -23,9 +24,9 @@
         let chooser = 0;
         let choices = [ [1, 1], [1, -1], [-1, -1], [-1, 1]  ];
 
-        for(let i = 0; i < SCREEN_SIZE/2; i++){
+        for(let i = 0; i < SCREEN_WIDTH/2; i++){
           if(isPrime(i)){ 
-            spaceCircles.push([SCREEN_SIZE/2 + i * choices[chooser][0], SCREEN_SIZE/2 + i * choices[chooser][1]])
+            spaceCircles.push([SCREEN_WIDTH/2 + i * choices[chooser][0], SCREEN_HEIGHT/2 + i * choices[chooser][1]])
             chooser += 1
             if(chooser > 3){chooser = 0}
            }
@@ -34,8 +35,8 @@
 
 
         var svgContainer = d3.select("body").append("svg")
-                                            .attr("width", SCREEN_SIZE)
-                                            .attr("height", SCREEN_SIZE/2).attr("border",1);
+                                            .attr("width", SCREEN_WIDTH)
+                                            .attr("height", SCREEN_HEIGHT).attr("border",1);
 
         var circles = svgContainer.selectAll("circle")
                                    .data(spaceCircles)
@@ -51,7 +52,7 @@
             .data(spaceCircles)
             .enter().append('path')
 
-        var prev = [[SCREEN_SIZE/2, SCREEN_SIZE/2]]
+        var prev = [[SCREEN_WIDTH/2, SCREEN_HEIGHT/2]]
 
         paths.attr('d', function (d){ 
           let r = Gen(spaceCircles)
