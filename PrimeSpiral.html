@@ -35,7 +35,7 @@
 
         var svgContainer = d3.select("body").append("svg")
                                             .attr("width", SCREEN_SIZE)
-                                            .attr("height", SCREEN_SIZE).attr("border",1);
+                                            .attr("height", SCREEN_SIZE/2).attr("border",1);
 
         var circles = svgContainer.selectAll("circle")
                                    .data(spaceCircles)
