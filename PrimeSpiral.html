@@ -8,75 +8,68 @@
     
     
     <script>
-         var spaceCircles = [];
-const colors = ["green", "purple", "orange"];
+        
+        var spaceCircles = [];
 
-const isPrime = num => {
-    for(let i = 2, s = Math.sqrt(num); i <= s; i++)
-        if(num % i === 0) return false; 
-    return num > 1;
-}
+        const SCREEN_SIZE = window.screen.width;
+        const colors = ["green", "purple", "orange"];
 
-let chooser = 0;
-let choices = [ [1, 1], [1, -1], [-1, -1], [-1, 1]  ];
+        const isPrime = num => {
+            for(let i = 2, s = Math.sqrt(num); i <= s; i++)
+                if(num % i === 0) return false; 
+            return num > 1;
+        }
 
-for(let i = 0; i < 600; i++){
-  if(isPrime(i)){ 
-    spaceCircles.push([600 + i * choices[chooser][0], 600 + i * choices[chooser][1]])
-    chooser += 1
-    if(chooser > 3){chooser = 0}
-   }
-}
+        let chooser = 0;
+        let choices = [ [1, 1], [1, -1], [-1, -1], [-1, 1]  ];
 
-
-
-var svgContainer = d3.select("body").append("svg")
-                                    .attr("width", 1200)
-                                    .attr("height", 1200).attr("border",1);
-
-var circles = svgContainer.selectAll("circle")
-                           .data(spaceCircles)
-                           .enter()
-                          .append("circle");
-
-var Gen = d3.line() 
-  .x((p) => p[0]) 
-  .y((p) => p[1]) 
-  .curve(d3.curveCardinal); 
-
-/*const linker = (from, to) => {
- return d3.curveBasis()({
-    source: from,
-    target: to
-  });
-}
-
-*/
-paths = svgContainer.selectAll('path')
-    .data(spaceCircles)
-    .enter().append('path')
-
-
-var prev = [[600, 600]]
-
-paths.attr('d', function (d){ 
-  let r = Gen(spaceCircles)
-  prev = d
-  return r
-})
-  .attr('stroke', '#B00020')
-  .attr('fill', 'none')
+        for(let i = 0; i < SCREEN_SIZE/2; i++){
+          if(isPrime(i)){ 
+            spaceCircles.push([SCREEN_SIZE/2 + i * choices[chooser][0], SCREEN_SIZE/2 + i * choices[chooser][1]])
+            chooser += 1
+            if(chooser > 3){chooser = 0}
+           }
+        }
 
 
 
-var circleAttributes = circles
-                       .attr("cx", function (d) { return d[0];  })
-                       .attr("cy", function (d) { return d[1]; })
-                       .attr("r", 6)
-                       .style("fill", function(d) {
-                             let random = Math.floor(Math.random() * colors.length);
-                             return colors[random];
-                       });
+        var svgContainer = d3.select("body").append("svg")
+                                            .attr("width", SCREEN_SIZE)
+                                            .attr("height", SCREEN_SIZE).attr("border",1);
+
+        var circles = svgContainer.selectAll("circle")
+                                   .data(spaceCircles)
+                                   .enter()
+                                  .append("circle");
+
+        var Gen = d3.line() 
+          .x((p) => p[0]) 
+          .y((p) => p[1]) 
+          .curve(d3.curveCardinal); 
+
+        paths = svgContainer.selectAll('path')
+            .data(spaceCircles)
+            .enter().append('path')
+
+        var prev = [[SCREEN_SIZE/2, SCREEN_SIZE/2]]
+
+        paths.attr('d', function (d){ 
+          let r = Gen(spaceCircles)
+          prev = d
+          return r
+        })
+          .attr('stroke', '#B00020')
+          .attr('fill', 'none')
+
+
+        var circleAttributes = circles
+                               .attr("cx", function (d) { return d[0];  })
+                               .attr("cy", function (d) { return d[1]; })
+                               .attr("r", 6)
+                               .style("fill", function(d) {
+                                     let random = Math.floor(Math.random() * colors.length);
+                                     return colors[random];
+                               });
     
     </script>
     
